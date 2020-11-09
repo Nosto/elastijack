@@ -16,6 +16,7 @@ jobs:
           output: output
           verbosity: v2
           scope: Inspection
+          plugins: 1347
 
       - name: Archive inspection results
         uses: actions/upload-artifact@v1
