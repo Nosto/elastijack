@@ -1,9 +1,8 @@
-package simple.scala.gradle.project
+package com.mridang.jackson.module.elastic
 
 import java.util
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.mridang.jackson.module.elastic.{ElasticsearchMappingGenerator, ElasticsearchMappings, ElasticsearchProperty}
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
