@@ -14,19 +14,17 @@ class MainSuite extends FunSuite {
     val generator = new ElasticsearchMappingGenerator
     val jsonSchema = generator.generateSchema(classOf[SimpleBean])
 
-    println(jsonSchema)
     assert(jsonSchema != null)
   }
 
-
   class SimpleBean extends ElasticsearchMappings {
     @ElasticsearchProperty(name = "foo",
-      `type` = ElasticsearchProperty.Type.KEYWORD,
-      index = false)
+                           `type` = ElasticsearchProperty.Type.KEYWORD,
+                           index = false)
     def getName: Option[String] = Some("some")
   }
 
-  class wdf extends ElasticsearchMappings {
+  class Test extends ElasticsearchMappings {
 
     private var property1: Int = 0
     private var property2: String = _

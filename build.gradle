@@ -1,3 +1,4 @@
+//noinspection GroovyAssignabilityCheck
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 buildscript {
@@ -60,13 +61,11 @@ nullaway {
     annotatedPackages.add("com.mridang")
 }
 
-// Configuration for the Checkstyle plugin. It seems that it isn't possible to define
+// Configuration for the Scalastyle plugin. It seems that it isn't possible to define
 // the output report formats here and those seem to be defined on the individual
 // task level.
-// I'm not sure why the tool version is defined here and it isn't managed as a
-// dependency.
 scalaStyle {
-    configLocation "config/checkstyle/checkstyle.xml"
+    configLocation "project/scalastyle_config.xml"
 }
 
 // Configuration for the Jacoco plugin. It seems that it isn't possible to define
@@ -120,6 +119,7 @@ artifacts {
 }
 
 publishing {
+    //noinspection GroovyAssignabilityCheck
     repositories {
         maven {
             name = "github"
@@ -127,44 +127,66 @@ publishing {
             credentials(PasswordCredentials)
         }
     }
+    //noinspection GroovyAssignabilityCheck
     publications {
+        //noinspection GroovyAssignabilityCheck
         maven(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
             from components.java
 
+            //noinspection GroovyAssignabilityCheck
             artifact sourcesJar
+            //noinspection GroovyAssignabilityCheck
             artifact scaladocJar
 
             pom {
+                //noinspection GroovyAssignabilityCheck
                 name = 'json-module-surveyor'
+                //noinspection GroovyAssignabilityCheck
                 description = 'Add-on module for Jackson (http://jackson.codehaus.org) to support Elasticsearch mapping generation.'
+                //noinspection GroovyAssignabilityCheck
                 url = 'https://github.com/mridang/jackson-module-surveyor'
                 licenses {
                     license {
+                        //noinspection GroovyAssignabilityCheck
                         name = 'The Apache Software License, Version 2.0'
+                        //noinspection GroovyAssignabilityCheck
                         url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        //noinspection GroovyAssignabilityCheck
                         distribution = 'repo'
                     }
                 }
                 scm {
+                    //noinspection GroovyAssignabilityCheck
                     url = 'https://github.com/mridang/jackson-module-surveyor'
+                    //noinspection GroovyAssignabilityCheck
                     connection = 'scm:git:git://github.com/mridang/jackson-module-surveyor'
+                    //noinspection GroovyAssignabilityCheck
                     developerConnection = 'scm:git:git://github.com/mridang/jackson-module-surveyor'
                 }
                 issueManagement {
+                    //noinspection GroovyAssignabilityCheck
                     system = "Github"
+                    //noinspection GroovyAssignabilityCheck
                     url = "https://github.com/mridang/jackson-module-surveyor/issues"
                 }
                 developers {
                     developer {
+                        //noinspection GroovyAssignabilityCheck
                         id = 'ollik1'
+                        //noinspection GroovyAssignabilityCheck
                         name = 'Olli Kuonanoja'
+                        //noinspection GroovyAssignabilityCheck
                         email = 'olli.kuonanoja@gmail.com'
                     }
                 }
                 contributors {
                     contributor {
+                        //noinspection GroovyAssignabilityCheck
                         id = 'mridang'
+                        //noinspection GroovyAssignabilityCheck
                         name = 'Mridang Agarwalla'
+                        //noinspection GroovyAssignabilityCheck
                         email = 'mridang.agarwalla@gmail.com'
                     }
                 }

@@ -11,6 +11,7 @@ import com.fasterxml.jackson.module.jsonSchema.types.{ArraySchema, ObjectSchema}
  * A customized visitor that intercepts generated [[JsonSchema]] instances
  * and uses [[ElasticsearchJsonSchemaBase]] based objects instead.
  */
+//noinspection ScalaStyle
 class ElasticsearchSchemaFactoryWrapper(
                                          _provider: SerializerProvider /* use only as an initial value!! */ )
   extends SchemaFactoryWrapper(_provider,
@@ -18,8 +19,10 @@ class ElasticsearchSchemaFactoryWrapper(
 
   /**
    * Customised [[ObjectSchema]] visits:
-   * - Disable reference schemas as there is no support for such things in Elasticsearch (so don't call visitorContext.addSeenSchemaUri)
-   * - Put [[ElasticsearchJsonSchemaBase]] based objects to schema instead of standard [[JsonSchema]] ones.
+   * - Disable reference schemas as there is no support for such things in
+   * Elasticsearch (so don't call visitorContext.addSeenSchemaUri)
+   * - Put [[ElasticsearchJsonSchemaBase]] based objects to schema instead
+   * of standard [[JsonSchema]] ones.
    */
   override def expectObjectFormat(
                                    convertedType: JavaType): JsonObjectFormatVisitor = {
