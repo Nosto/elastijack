@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.module.jsonSchema.factories.{SchemaFactoryWrapper, VisitorContext, WrapperFactory}
 
 /**
- * Allows overwriting expectXFormat methods by instantiating sublasses of
+ * Allows overwriting expectXFormat methods by instantiating subclasses of
  * [[SchemaFactoryWrapper]] instead of the default implementations.
  */
 object ElasticsearchSchemaFactoryWrapperFactory extends WrapperFactory {

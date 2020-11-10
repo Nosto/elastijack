@@ -1,12 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2016 Nosto Solutions Ltd All Rights Reserved.
- * <p>
- * This software is the confidential and proprietary information of
- * Nosto Solutions Ltd ("Confidential Information"). You shall not
- * disclose such Confidential Information and shall use it only in
- * accordance with the terms of the agreement you entered into with
- * Nosto Solutions Ltd.
- ******************************************************************************/
 package com.mridang.jackson.module.elastic;
 
 import java.lang.annotation.ElementType;
@@ -28,6 +19,7 @@ public @interface ElasticsearchProperty {
     boolean DEFAULT_ENABLED = true;
     boolean DEFAULT_NORMS = true;
 
+    @SuppressWarnings("unused")
     enum Type {
         BOOLEAN("boolean"),
         INTEGER("integer"),
@@ -67,6 +59,7 @@ public @interface ElasticsearchProperty {
     Type type();
     String analyzer() default "";
     String normalizer() default "";
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean index() default DEFAULT_INDEX;
     boolean store() default DEFAULT_STORE;
     boolean enabled() default DEFAULT_ENABLED;

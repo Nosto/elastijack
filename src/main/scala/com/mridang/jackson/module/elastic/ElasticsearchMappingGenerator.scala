@@ -4,16 +4,14 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.{JsonMappingException, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 
-class ElasticsearchMappingGenerator(mapper: ObjectMapper) {
+class ElasticsearchMappingGenerator() {
 
-  val _writer = {
+  val _writer: ObjectMapper = {
     new ObjectMapper()
       .registerModule(DefaultScalaModule)
       .registerModule(new SimpleModule()
-        .setSerializerModifier(new ElasticsearcSchemaBeanSerializerModifier))
+        .setSerializerModifier(new ElasticsearchSchemaBeanSerializerModifier))
   }
-
-  def this() = this(new ObjectMapper)
 
   @throws[JsonMappingException]
   def generateSchema(`type`: Class[_]): Map[String, _] = {

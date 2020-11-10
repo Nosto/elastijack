@@ -3,7 +3,7 @@ package com.mridang.jackson.module.elastic
 import com.fasterxml.jackson.databind.{BeanDescription, JsonSerializer, SerializationConfig}
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier
 
-class ElasticsearcSchemaBeanSerializerModifier extends BeanSerializerModifier {
+class ElasticsearchSchemaBeanSerializerModifier extends BeanSerializerModifier {
   override def modifySerializer(
                                  config: SerializationConfig,
                                  beanDesc: BeanDescription,

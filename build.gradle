@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 buildscript {
     buildscript {
         repositories {
@@ -86,9 +88,7 @@ jacocoTestReport {
 }
 
 test {
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+    testLogging.events.addAll([TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED])
     reports {
         junitXml.enabled = true
         html.enabled = true
@@ -105,12 +105,12 @@ javadoc {
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    archiveClassifier.set("sources")
     from sourceSets.main.allSource
 }
 
 task scaladocJar(type: Jar, dependsOn: scaladoc) {
-    classifier = 'javadoc'
+    archiveClassifier.set("javadoc")
     from scaladoc.destinationDir
 }
 

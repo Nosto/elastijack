@@ -5,14 +5,10 @@ import java.util
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import org.scalatest.junit.JUnitRunner
+import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class MainSuite extends FunSuite {
-
-  test("true is always true") {
-    assert(true)
-  }
 
   test("that beans are serialized properly") {
     val generator = new ElasticsearchMappingGenerator
@@ -33,12 +29,12 @@ class MainSuite extends FunSuite {
   class wdf extends ElasticsearchMappings {
 
     private var property1: Int = 0
-    private var property2: String = null
-    private var property3: Array[String] = null
-    private var property4: util.Collection[Float] = null
+    private var property2: String = _
+    private var property3: Array[String] = _
+    private var property4: util.Collection[Float] = _
 
     @JsonProperty(required = true)
-    private var property5: String = null
+    private var property5: String = _
 
     def getProperty1: Int = property1
 
