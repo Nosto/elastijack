@@ -7,13 +7,13 @@ buildscript {
             google()
             mavenCentral()
             gradlePluginPortal()
-            jcenter()
         }
         dependencies {
             classpath "org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:1.0.1"
-            classpath "net.ltgt.gradle:gradle-errorprone-plugin:0.8"
-            classpath "net.ltgt.gradle:gradle-nullaway-plugin:0.2"
+            classpath "net.ltgt.gradle:gradle-errorprone-plugin:2.0.1"
+            classpath "net.ltgt.gradle:gradle-nullaway-plugin:1.1.0"
             classpath "gradle.plugin.com.dorongold.plugins:task-tree:1.5"
+            classpath "gradle.plugin.com.github.maiflai:gradle-scalatest:0.31"
         }
     }
 }
@@ -22,35 +22,42 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'scalaStyle'
 apply plugin: 'scala'
-apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'java-library'
 apply plugin: 'net.ltgt.errorprone'
 apply plugin: 'net.ltgt.nullaway'
 apply plugin: "com.dorongold.task-tree"
 apply plugin: "jacoco"
+apply plugin: "com.github.maiflai.scalatest"
 
-group 'com.mridang'
-version '0.0.2'
+group 'com.nosto'
+version '0.0.1'
 
 repositories {
     google()
     mavenCentral()
-    jcenter()
     maven {
         url 'https://dl.bintray.com/palantir/releases'
     }
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.scalatest:scalatest_2.12:3.0.8'
+    testImplementation group: 'org.scalatest', name: 'scalatest_2.12', version: '3.2.8'
+    testImplementation group: 'com.dimafeng', name: 'testcontainers-scala-scalatest_2.12', version: '0.39.3'
+    testImplementation group: 'com.dimafeng', name: 'testcontainers-scala-elasticsearch_2.12', version: '0.39.3'
+    testImplementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: '7.12.1'
+    testImplementation group: 'org.jeasy', name: 'easy-random-core', version: '5.0.0'
     testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.12:1.2.0'
-    compile 'org.scala-lang:scala-library:2.12.8'
-    compile 'com.fasterxml.jackson.module:jackson-module-jsonSchema:2.11.3'
-    compile 'com.fasterxml.jackson.module:jackson-module-scala_2.12:2.12.0-rc1'
-    errorprone group: 'com.uber.nullaway', name: 'nullaway', version: '0.7.9'
-    errorprone group: 'com.google.errorprone', name: 'error_prone_core', version: '2.3.4'
+    testRuntimeOnly 'com.vladsch.flexmark:flexmark-all:0.35.10'
+    implementation group: 'org.scala-lang', name: 'scala-library', version: '2.12.13'
+    implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.12', version: '2.12.3'
+    implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-jsonSchema', version: '2.12.3'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.12.3'
+    implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.12', version: '2.12.3'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.3'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-module-afterburner', version: '2.12.3'
+    errorprone group: 'com.uber.nullaway', name: 'nullaway', version: '0.9.1'
+    errorprone group: 'com.google.errorprone', name: 'error_prone_core', version: '2.6.0'
 }
 
 // Configuration for the nullaway extension. The rest of the parameters must be
@@ -58,7 +65,7 @@ dependencies {
 // is the name of the root package to be analysed.
 nullaway {
     //noinspection GrUnresolvedAccess
-    annotatedPackages.add("com.mridang")
+    annotatedPackages.add("com.nosto")
 }
 
 // Configuration for the Scalastyle plugin. It seems that it isn't possible to define
@@ -103,6 +110,10 @@ javadoc {
     options.addBooleanOption('html5', true)
 }
 
+scaladoc {
+    scalaDocOptions.additionalParameters = ['-no-link-warnings']
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
     archiveClassifier.set("sources")
     from sourceSets.main.allSource
@@ -123,7 +134,7 @@ publishing {
     repositories {
         maven {
             name = "github"
-            url = uri("https://maven.pkg.github.com/mridang/jackson-module-surveyor")
+            url = uri("https://maven.pkg.github.com/nosto/elastijack")
             credentials(PasswordCredentials)
         }
     }
@@ -141,34 +152,34 @@ publishing {
 
             pom {
                 //noinspection GroovyAssignabilityCheck
-                name = 'json-module-surveyor'
+                name = 'elastijack'
                 //noinspection GroovyAssignabilityCheck
-                description = 'Add-on module for Jackson (http://jackson.codehaus.org) to support Elasticsearch mapping generation.'
+                description = 'Add-on module for Jackson (https://jackson.codehaus.org) to support Elasticsearch mapping generation.'
                 //noinspection GroovyAssignabilityCheck
-                url = 'https://github.com/mridang/jackson-module-surveyor'
+                url = 'https://github.com/nosto/elastijack'
                 licenses {
                     license {
                         //noinspection GroovyAssignabilityCheck
                         name = 'The Apache Software License, Version 2.0'
                         //noinspection GroovyAssignabilityCheck
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
                         //noinspection GroovyAssignabilityCheck
                         distribution = 'repo'
                     }
                 }
                 scm {
                     //noinspection GroovyAssignabilityCheck
-                    url = 'https://github.com/mridang/jackson-module-surveyor'
+                    url = 'https://github.com/nosto/elastijack'
                     //noinspection GroovyAssignabilityCheck
-                    connection = 'scm:git:git://github.com/mridang/jackson-module-surveyor'
+                    connection = 'scm:git:git://github.com/nosto/elastijack'
                     //noinspection GroovyAssignabilityCheck
-                    developerConnection = 'scm:git:git://github.com/mridang/jackson-module-surveyor'
+                    developerConnection = 'scm:git:git://github.com/nosto/elastijack'
                 }
                 issueManagement {
                     //noinspection GroovyAssignabilityCheck
                     system = "Github"
                     //noinspection GroovyAssignabilityCheck
-                    url = "https://github.com/mridang/jackson-module-surveyor/issues"
+                    url = "https://github.com/nosto/elastijack/issues"
                 }
                 developers {
                     developer {
@@ -177,17 +188,25 @@ publishing {
                         //noinspection GroovyAssignabilityCheck
                         name = 'Olli Kuonanoja'
                         //noinspection GroovyAssignabilityCheck
-                        email = 'olli.kuonanoja@gmail.com'
+                        email = 'olli.kuonanoja@nosto.com'
                     }
                 }
                 contributors {
+                    contributor {
+                        //noinspection GroovyAssignabilityCheck
+                        id = 'andrei-katkov'
+                        //noinspection GroovyAssignabilityCheck
+                        name = 'Andrei Katkov'
+                        //noinspection GroovyAssignabilityCheck
+                        email = 'andrei.katkov@nosto.com'
+                    }
                     contributor {
                         //noinspection GroovyAssignabilityCheck
                         id = 'mridang'
                         //noinspection GroovyAssignabilityCheck
                         name = 'Mridang Agarwalla'
                         //noinspection GroovyAssignabilityCheck
-                        email = 'mridang.agarwalla@gmail.com'
+                        email = 'mridang.agarwalla@nosto.com'
                     }
                 }
             }

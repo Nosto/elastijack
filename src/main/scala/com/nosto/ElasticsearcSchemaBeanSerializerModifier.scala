@@ -1,9 +1,9 @@
-package com.mridang.jackson.module.elastic
+package com.nosto
 
-import com.fasterxml.jackson.databind.{BeanDescription, JsonSerializer, SerializationConfig}
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier
+import com.fasterxml.jackson.databind.{BeanDescription, JsonSerializer, SerializationConfig}
 
-class ElasticsearchSchemaBeanSerializerModifier extends BeanSerializerModifier {
+class ElasticsearcSchemaBeanSerializerModifier extends BeanSerializerModifier {
   override def modifySerializer(
                                  config: SerializationConfig,
                                  beanDesc: BeanDescription,

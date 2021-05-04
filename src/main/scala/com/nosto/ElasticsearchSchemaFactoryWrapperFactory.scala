@@ -1,19 +1,22 @@
-package com.mridang.jackson.module.elastic
+package com.nosto
 
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.module.jsonSchema.factories.{SchemaFactoryWrapper, VisitorContext, WrapperFactory}
 
 /**
- * Allows overwriting expectXFormat methods by instantiating subclasses of
+ * Allows overwriting expectXFormat methods by instantiating sublasses of
  * [[SchemaFactoryWrapper]] instead of the default implementations.
  */
-object ElasticsearchSchemaFactoryWrapperFactory extends WrapperFactory {
+class ElasticsearchSchemaFactoryWrapperFactory(
+                                                wrapperFactory: (SerializerProvider,
+                                                  WrapperFactory) => SchemaFactoryWrapper)
+  extends WrapperFactory {
   override def getWrapper(provider: SerializerProvider): SchemaFactoryWrapper = {
-    new ElasticsearchSchemaFactoryWrapper(provider)
+    wrapperFactory(provider, this)
   }
 
   override def getWrapper(provider: SerializerProvider,
                           rvc: VisitorContext): SchemaFactoryWrapper = {
-    new ElasticsearchSchemaFactoryWrapper(provider).setVisitorContext(rvc)
+    wrapperFactory(provider, this).setVisitorContext(rvc)
   }
 }

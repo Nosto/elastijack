@@ -1,4 +1,4 @@
-package com.mridang.jackson.module.elastic
+package com.nosto
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.module.jsonSchema.types.ObjectSchema
@@ -10,6 +10,6 @@ import scala.annotation.meta.field
  * as the root is not annotated and contains no type information.
  */
 class ElasticsearchRootSchema(
-                               @(JsonIgnore @field) override val backing: ObjectSchema)
+                               @(JsonIgnore@field) override val backing: ObjectSchema)
   extends ElasticsearchJsonSchemaBase
     with ElasticsearchContainerSchema

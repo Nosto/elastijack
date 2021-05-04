@@ -1,4 +1,4 @@
-package com.mridang.jackson.module.elastic
+package com.nosto
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.module.jsonSchema.types.ObjectSchema
@@ -11,6 +11,6 @@ import scala.annotation.meta.field
  */
 class ElasticsearchObjectSchema(
                                  ann: ElasticsearchProperty,
-                                 @(JsonIgnore @field) override val backing: ObjectSchema)
+                                 @(JsonIgnore@field) override val backing: ObjectSchema)
   extends ElasticsearchAnnotatedSchema(ann)
     with ElasticsearchContainerSchema

@@ -1,4 +1,4 @@
-package com.mridang.jackson.module.elastic
+package com.nosto
 
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema
 import com.fasterxml.jackson.module.jsonSchema.types.ObjectSchema
@@ -19,6 +19,6 @@ trait ElasticsearchContainerSchema
       case (k, e: ElasticsearchJsonSchemaBase) => (k, e)
       case (k, unknown) =>
         throw new IllegalArgumentException(
-          s"Property $k has non-elasticsearch type ${unknown.getClass}")
+          s"Property ${k} has non-elasticsearch type ${unknown.getClass}")
     }.toMap
 }

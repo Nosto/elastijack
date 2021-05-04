@@ -1,4 +1,4 @@
-package com.mridang.jackson.module.elastic
+package com.nosto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
